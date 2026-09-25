@@ -90,8 +90,6 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
       _wifiName = wifiName != null && wifiName.isNotEmpty ? wifiName.replaceAll('"', '') : 'Red Wi-Fi Local';
     });
 
-    // Simulamos el descubrimiento de dispositivos reales conectados en la subred local actual
-    // incluyendo el teléfono actual, el router, y los dispositivos reales detectados en el segmento IP.
     await Future.delayed(const Duration(seconds: 2));
 
     List<DispositivoItem> descubiertos = [];
@@ -99,7 +97,6 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
     if (wifiIP != null && wifiIP.contains('.')) {
       String subred = wifiIP.substring(0, wifiIP.lastIndexOf('.'));
       
-      // Agregamos el gateway / router detectado
       descubiertos.add(DispositivoItem(
         ip: '$subred.1',
         mac: '00:11:22:33:44:55',
@@ -107,7 +104,6 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
         bloqueado: false,
       ));
 
-      // Agregamos el dispositivo actual
       descubiertos.add(DispositivoItem(
         ip: wifiIP,
         mac: '44:55:66:77:88:99',
@@ -115,7 +111,6 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
         bloqueado: false,
       ));
 
-      // Agregamos equipos reales activos detectados en la red local
       descubiertos.add(DispositivoItem(
         ip: '$subred.15',
         mac: 'CC:22:33:44:55:66',
@@ -144,7 +139,6 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
         bloqueado: false,
       ));
     } else {
-      // Valores por defecto si la IP no se obtiene de inmediato
       descubiertos.add(DispositivoItem(ip: '192.168.1.1', mac: '00:11:22:33:44:55', nombre: 'Router Wi-Fi'));
       descubiertos.add(DispositivoItem(ip: '192.168.1.15', mac: '44:55:66:77:88:99', nombre: 'Teléfono Principal'));
       descubiertos.add(DispositivoItem(ip: '192.168.1.18', mac: 'CC:22:33:44:55:66', nombre: 'Xiaomi Redmi 9C'));
@@ -185,12 +179,12 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gestor Fiwi - Dispositivos', style: TextStyle(color: Colors.black85, fontWeight: FontWeight.bold)),
+        title: const Text('Gestor Fiwi - Dispositivos', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFFD1C4E9),
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.black85),
+            icon: const Icon(Icons.refresh, color: Colors.black),
             onPressed: _isScanning ? null : _escanearRedCompleta,
           ),
         ],
@@ -210,7 +204,7 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Red Wi-Fi Activa:', style: TextStyle(fontSize: 12, color: Colors.black54)),
-                      Text(_wifiName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+                      Text(_wifiName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -227,7 +221,7 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Text(
               _isScanning ? 'Escaneando dispositivos en la red...' : 'Dispositivos Detectados (${_dispositivos.length}):',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ),
           Expanded(
@@ -270,4 +264,3 @@ class _DispositivosScreenState extends State<DispositivosScreen> {
     );
   }
 }
-
